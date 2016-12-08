@@ -8,15 +8,12 @@ int main()
 {
 TimerPoint = 0;
 printf("Cet écran sera actualisé dans quelques secondes ");
-printf("\nTimerPoint = %d\n",TimerPoint);
 while(TimerPoint<=9)
 	{
 	printf(".");
+	fflush(stdout);
 	sleep(1);
 	TimerPoint++;
-	printf(".");
 	}
-
 TimerPoint=0;
-
 }
