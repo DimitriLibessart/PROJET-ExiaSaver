@@ -2,18 +2,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int TimerPoint;
-
-int main()
+int main(int argc, char *argv[])
 {
-TimerPoint = 0;
+int TimerPoint=0;
 printf("Cet écran sera actualisé dans quelques secondes ");
-while(TimerPoint<=9)
+while(TimerPoint < 100)
+	{
+	while(TimerPoint<=9)
 	{
 	printf(".");
 	fflush(stdout);
 	sleep(1);
 	TimerPoint++;
+	TimerPoint=0;
 	}
-TimerPoint=0;
+	}
+return 0;
 }
+
