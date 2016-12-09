@@ -6,15 +6,23 @@ int main(int argc, char *argv[])
 
 {
 
+system("clear");
+
 FILE* fichier = NULL;
 
 int caractereActuel = 0;
     
 int compteurLigne = 0;
 
-int nombreAleatoire = 1;
+int Aleatoire (int _iMin, int _iMax)
+{
+return (_iMin + (rand () % (_iMax-_iMin+1)));
+}
 
+int nombreAleatoire;
 
+srand (time (NULL));
+nombreAleatoire = Aleatoire (1,3);
 
 if(nombreAleatoire==1)
 	{	
@@ -67,8 +75,12 @@ break;
         } while (compteurLigne < 24 ); // Tant que le compteurLigne est inférieur à 24, la lecture et l'ecriture de l'image continue
 
 	fclose(fichier);
-
 }
+printf("Appuyez sur une touche pour quitter le mode veille");
+system("stty cbreak -echo");
+getchar();
+system("stty cooked echo");
+system("clear");
+system("clear");
 
-return 0;
 }
