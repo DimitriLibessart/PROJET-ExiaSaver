@@ -25,16 +25,19 @@ srand (time (NULL));
 nombreAleatoire = Aleatoire (1,3);
 
 if(nombreAleatoire==1)
-	{	
-	fichier = fopen("statique1.pbm", "r");
+	{
+
+	fichier = fopen("/home/florian/Documents/statique1.pbm", "r");
 	}
 if(nombreAleatoire==2)
 	{	
-	fichier = fopen("statique2.pbm", "r");
+
+	fichier = fopen("/home/florian/Documents/statique2.pbm", "r");
 	}
 if(nombreAleatoire==3)
-	{	
-	fichier = fopen("statique3.pbm", "r");
+	{
+
+	fichier = fopen("/home/florian/Documents/statique3.pbm", "r");
 	}
 
 
@@ -82,5 +85,4 @@ getchar();
 system("stty cooked echo");
 system("clear");
 system("clear");
-
 }
