@@ -6,20 +6,20 @@ int main(int argc, char *argv[])
 
 {
 
-system("clear");
+system("clear");  //on nettoie le terminal de toute commande
 
-FILE* fichier = NULL;
+FILE* fichier = NULL; //initialisation du fichier à "NULL"
 
-int caractereActuel = 0;
-    
-int compteurLigne = 0;
+int caractereActuel = 0; //initialisation de la variable caractéreActuel
+     
+int compteurLigne = 0;  //initialisation de la variable compteurLigne
 
 int Aleatoire (int _iMin, int _iMax)
 {
 return (_iMin + (rand () % (_iMax-_iMin+1)));
 }
 
-int nombreAleatoire;
+int nombreAleatoire;   //choix aléatoire d'un numéro d'image 
 
 srand (time (NULL));
 nombreAleatoire = Aleatoire (1,3);
@@ -27,17 +27,17 @@ nombreAleatoire = Aleatoire (1,3);
 if(nombreAleatoire==1)
 	{
 
-	fichier = fopen("/home/florian/Documents/statique1.pbm", "r");
+	fichier = fopen("statique1couleur.pbm", "r");
 	}
 if(nombreAleatoire==2)
 	{	
 
-	fichier = fopen("/home/florian/Documents/statique2.pbm", "r");
+	fichier = fopen("statique2couleur.pbm", "r");
 	}
 if(nombreAleatoire==3)
 	{
 
-	fichier = fopen("/home/florian/Documents/statique3.pbm", "r");
+	fichier = fopen("statique3couleur.pbm", "r");
 	}
 
 
@@ -55,7 +55,7 @@ if(nombreAleatoire==3)
 
 		caractereActuel = fgetc(fichier); // On lit le caractere
 
-	switch(caractereActuel)
+	switch(caractereActuel)  //fonction pour remplacer les valeurs binaires en caractére de la table ASCII
 {
 case 49: //1
 	printf("%c",178);
@@ -78,7 +78,7 @@ break;
         } while (compteurLigne < 24 ); // Tant que le compteurLigne est inférieur à 24, la lecture et l'ecriture de l'image continue
 
 	fclose(fichier);
-}
+}  //fonction de sortie pour rendre la main au shell
 printf("Appuyez sur une touche pour quitter le mode veille");
 system("stty cbreak -echo");
 getchar();
