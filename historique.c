@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 			else
 			{ 
 				printf("le fichier ne peut pas se fermer\n");
-			}
+			} 
 			
 
 			
