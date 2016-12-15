@@ -5,111 +5,142 @@
 
 int main(int argc,char *argv[])
 {
-int TimerPointActualisation=0;
-FILE* fichier = NULL;
-FILE* date = NULL;
+int TimerPointActualisation=0; // initialiser TimerPointActualisation pour commencer la boucle des points et de l'acutalisation
+int caractereActuel = 0;// initialiser caractereActuel à 0 pour la lecture de pbm
+int compteurLigne = 0;// initialiser compteurLigne à 0 pour la lecture de pbm
 
-int caractereActuel = 0;
+FILE* fichier = NULL; //pointer "fichier" en tant qu'un fichier
+FILE* date = NULL;// pointer "date" en tant qu'un fichier
 
-int compteurLigne = 0;
+fichier = fopen("/home/florian/Documents/modeVeille/date.txt", "w");// ouverture du fichier "date" ou nous allons stocker l'heure en écriture
+printf("\n");// retour à la ligne
+system("date +%T");// demande au système d'afficher la date
 
-while(TimerPointActualisation < 100)
-	{
-/* FILE* pbmpoints = NULL;
-FILE* pbm0 = NULL;
-FILE* pbm1 = NULL;
-FILE* pbm2 = NULL;
-FILE* pbm3 = NULL;
-FILE* pbm4 = NULL;
-FILE* pbm5 = NULL;
-FILE* pbm6 = NULL;
-FILE* pbm7 = NULL;
-FILE* pbm8 = NULL;
-FILE* pbm9 = NULL; */
-time_t crt = time(NULL);
-	char buf[15];
- 
-strftime(buf, sizeof(buf), "%T \n", localtime(&crt));
-
-date = fopen("/home/florian/Documents/modeVeille/date.txt", "r+");
-
-puts(buf);
-
-	if (date !=NULL)
+if (fichier !=NULL)
         {
-        time_t now= time (NULL);
-        struct tm tm_now = *localtime (&now);
-        char s_now[sizeof "HH:MM:SS"];
-        strftime (s_now, sizeof s_now, "%H:%M:%S", &tm_now);
-        fprintf (date,"%s", s_now);
-        }
+        time_t now= time (NULL);// définition de l'heure actuelle sur time
+        struct tm tm_now = *localtime (&now);// pointer l'heure actuelle sur l'heure locale
+        char s_now[sizeof "HH:MM:SS"];// définition du format et de la taille de l'heure
+        strftime (s_now, sizeof s_now, "%H:%M:%S", &tm_now);// définition de la valeur affiché classé en Heures,Minutes et Secondes
+        fprintf (fichier,"%s", s_now);// écriture de l'heure dans le fichier date.txt
+	}
 
-	fclose(date);
+fclose(fichier);// fermeture du fichier
 
-//=============================================================================================================================================
 
-	fichier = fopen("/home/florian/Documents/modeVeille/date.txt", "r");
-/* pbmpoints = fopen("/home/florian/Documents/pbm/:.pbm"),"r");
-pbm0 = fopen("/home/florian/Documents/pbm/0.pbm"),"r");
-pbm1 = fopen("/home/florian/Documents/pbm/1.pbm"),"r");
-pbm2 = fopen("/home/florian/Documents/pbm/2.pbm"),"r");
-pbm3 = fopen("/home/florian/Documents/pbm/3.pbm"),"r");
-pbm4 = fopen("/home/florian/Documents/pbm/4.pbm"),"r");
-pbm5 = fopen("/home/florian/Documents/pbm/5.pbm"),"r");
-pbm6 = fopen("/home/florian/Documents/pbm/6.pbm"),"r");
-pbm7 = fopen("/home/florian/Documents/pbm/7.pbm"),"r");
-pbm8 = fopen("/home/florian/Documents/pbm/8.pbm"),"r");
-pbm9 = fopen("/home/florian/Documents/pbm/9.pbm"),"r"); */
-if(TimerPointActualisation<3)
-	{
+	fichier = fopen("/home/florian/Documents/modeVeille/date.txt", "r");// ouverture du fichier "date" ou nous allons stocker l'heure en lecture
+
+
+
 
 	if (fichier != NULL)
 
 	{
 
-        // Boucle de lecture des caracteres un a un
+	do// Boucle de lecture qui permet de lire chaque caractères
 
-        do
-		
+	{
 
-        {
-
-		caractereActuel = fgetc(fichier); // On lit le caractere
+	caractereActuel = fgetc(fichier); // lecture de chaque caractère dans le fichier
 
 	switch(caractereActuel)
-	{
-	case 49: //1
-	printf("%c",178);
-	break;
-	case 48: //0
-	printf("%c",176);
-	break;
-	case '\t': //tab
-	//printf("er");
-	break;
-	default:
-	printf("\n");
-	compteurLigne++;
-	break;
-	}
+{
+case 49: //si on rencontre 1
+	printf("%c",178);//on affiche un carré blanc
+break;// sortir de la boucle de rencontre 1
+case 48: //si on rencontre 0
+	printf("%c",176);//on affiche un carré gris
+break;// sortir de la boucle de rencontre 0
+default:
+	printf("\n");//retour à la ligne quand il n'y a plus de caractères
+	compteurLigne++;//on ajoute 1 au compteurLigne 
+break;// sortir de la boucle de rencontre de fin de ligne
+}
 
+        } while (compteurLigne < 8 ); // Tant que le compteurLigne est inférieur à 8, la lecture et l'ecriture de l'image continue
+
+	fclose(fichier);// fermeture du fichier "date"
+
+	
+}
 	
 
 
-        } while (compteurLigne < 5 ); // Tant que le compteurLigne est inférieur à 5, la lecture et l'ecriture de l'image continue
+printf("\nCet ecran sera actualise dans quelques secondes ");// afficher le message d'actualisation
 
-	fclose(fichier);
-	//=========================================
-	printf("Cet ecran sera actualise dans quelques secondes ");
-	printf(".");
-	fflush(stdout);
-	sleep(1);
-	TimerPointActualisation++;
+compteurLigne = 0;
+
+//============================================DEBUT DE LA BOUCLE==========================================================================
+
+while(TimerPointActualisation < 100)// boucle infini
+	{
+	
+	if(TimerPointActualisation<10)//si TimerPointActualisation est inférieur à 10
+	{
+	printf(".");// afficher un point
+	fflush(stdout);// vider le buffer(fonction qui permet d'éviter que les points ne s'affichent tous d'un coup)
+	sleep(1);// faire une pause de 1 seconde
+	TimerPointActualisation++;// ajouter 1 à TimerPointActualisation
 	}
 	else
 	{
-	TimerPointActualisation=0;
+	system("clear"); // demande au système de nettoyer la console
+	printf("\n"); // retour à la ligne
+
+fichier = fopen("/home/florian/Documents/modeVeille/date.txt", "w");
+	system("date +%T");// demande au système d'afficher la date
+
+if (fichier !=NULL)
+        {
+        time_t now= time (NULL);// définition de l'heure actuelle sur time
+        struct tm tm_now = *localtime (&now);// pointer l'heure actuelle sur l'heure locale
+        char s_now[sizeof "HH:MM:SS"];// définition du format et de la taille de l'heure
+        strftime (s_now, sizeof s_now, "%H:%M:%S", &tm_now);// définition de la valeur affiché classé en Heures,Minutes et Secondes
+        fprintf (fichier,"%s", s_now);// écriture de l'heure dans le fichier date.txt
+        }
+	fclose(fichier);// fermeture du fichier "date"
+
+	fichier = fopen("/home/florian/Documents/modeVeille/date.txt", "r");// ouverture du fichier "date" ou nous allons stocker l'heure en lecture
+
+
+
+
+	if (fichier != NULL)
+
+	{
+
+	do// Boucle de lecture qui permet de lire chaque caractères
+
+	{
+
+	caractereActuel = fgetc(fichier); // lecture de chaque caractère dans le fichier
+
+	switch(caractereActuel)
+{
+case 49: //si on rencontre 1
+	printf("%c",178);//on affiche un carré blanc
+break;// sortir de la boucle de rencontre 1
+case 48: //si on rencontre 0
+	printf("%c",176);//on affiche un carré gris
+break;// sortir de la boucle de rencontre 0
+default:
+	printf("\n");//retour à la ligne quand il n'y a plus de caractères
+	compteurLigne++;//on ajoute 1 au compteurLigne 
+break;// sortir de la boucle de rencontre de fin de ligne
+}
+
+        } while (compteurLigne < 8 ); // Tant que le compteurLigne est inférieur à 8, la lecture et l'ecriture de l'image continue
+
+	fclose(fichier);// fermeture du fichier "date"
+	}
+
+	compteurLigne = 0;
+
+	printf("\n");// retour à la ligne
+	printf("Cet ecran sera actualise dans quelques secondes ");  // afficher le message d'actualisation
+	TimerPointActualisation=0; // initialiser TimerPointActualisation afin de recommencer la boucle
 	}
 	}
+return 0;
 }
-}
+
